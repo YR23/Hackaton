@@ -1,0 +1,10 @@
+C:\Users\YR\Documents\BGU\שנה ד'\תקשורת\מטלות\הקאתון\victim\victim\obj\Debug\victim.csprojAssemblyReference.cache
+C:\Users\YR\Documents\BGU\שנה ד'\תקשורת\מטלות\הקאתון\victim\victim\obj\Debug\victim.Form1.resources
+C:\Users\YR\Documents\BGU\שנה ד'\תקשורת\מטלות\הקאתון\victim\victim\obj\Debug\victim.Properties.Resources.resources
+C:\Users\YR\Documents\BGU\שנה ד'\תקשורת\מטלות\הקאתון\victim\victim\obj\Debug\victim.csproj.GenerateResource.cache
+C:\Users\YR\Documents\BGU\שנה ד'\תקשורת\מטלות\הקאתון\victim\victim\obj\Debug\victim.csproj.CoreCompileInputs.cache
+C:\Users\YR\Documents\BGU\שנה ד'\תקשורת\מטלות\הקאתון\victim\victim\bin\Debug\victim.exe.config
+C:\Users\YR\Documents\BGU\שנה ד'\תקשורת\מטלות\הקאתון\victim\victim\bin\Debug\victim.exe
+C:\Users\YR\Documents\BGU\שנה ד'\תקשורת\מטלות\הקאתון\victim\victim\bin\Debug\victim.pdb
+C:\Users\YR\Documents\BGU\שנה ד'\תקשורת\מטלות\הקאתון\victim\victim\obj\Debug\victim.exe
+C:\Users\YR\Documents\BGU\שנה ד'\תקשורת\מטלות\הקאתון\victim\victim\obj\Debug\victim.pdb

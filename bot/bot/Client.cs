@@ -16,6 +16,7 @@ namespace bot
         TcpClient mClient;
         int mServerPort;
         IPAddress mServerIPAddress;
+        string ShobName = "Laliz";
 
         internal void setController(controller mController)
         {
@@ -118,17 +119,33 @@ namespace bot
         {
             if (string.IsNullOrEmpty(pass))
             {
-                controller.UpdateMessageBox("please Enter A Password!");
+                controller.UpdateMessageBox("please Enter A valid Password!");
                 return;
             }
             if (mClient != null)
             {
                 if (mClient.Connected)
                 {
-                    StreamWriter clientStreamWriter = new StreamWriter(mClient.GetStream());
-                    clientStreamWriter.AutoFlush = true;
-                    await clientStreamWriter.WriteAsync(pass);
+                    StreamReader reader = null;
+                    NetworkStream nwStream = mClient.GetStream();
+                    //creating the buffer message
+                    byte[] buffMessage = Encoding.ASCII.GetBytes(pass);
 
+                    //sending the message to the client
+                    nwStream.Write(buffMessage, 0, buffMessage.Length);
+                    //waiting for response
+                    reader = new StreamReader(nwStream);
+                    char[] buff = new char[64];
+                    int nRet = await reader.ReadAsync(buff, 0, buff.Length);
+                    string receivedText = new string(buff);
+                    Array.Clear(buff, 0, buff.Length);
+                    if (receivedText == "Access Granted!")
+                    {
+                        byte[] buf = Encoding.ASCII.GetBytes("Hacked By "+ShobName + "!");
+
+                        //sending the message to the client
+                        nwStream.Write(buf, 0, buf.Length);
+                    }
                 }
             }
         }

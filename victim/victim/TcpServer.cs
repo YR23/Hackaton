@@ -19,14 +19,14 @@ namespace victim
         TcpListener mTCPListener;
 
         List<TcpClient> mClients;
-        Dictionary<int, int> TimeDictionary;
+        Dictionary<string, int> TimeDictionary;
 
         public bool KeepRunning { get; set; }
 
         public TcpServer()
         {
             mClients = new List<TcpClient>();
-            TimeDictionary = new Dictionary<int, int>();
+            TimeDictionary = new Dictionary<string, int>();
             
         }
 
@@ -55,7 +55,37 @@ namespace victim
                     TcpClient client = await mTCPListener.AcceptTcpClientAsync();
                     controller.NewClient(client.Client.RemoteEndPoint);
                     string result = await AskClientForPassword(client);
-                    controller.message(result);
+                    bool correct = CheckThePass(result);
+                    if (correct)
+                    {
+                        var second = DateTime.Now.Second;
+                        var minute = DateTime.Now.Minute;
+                        
+                        int currentClientsSameSecond = TimeDictionary[minute+"|"+second];
+                        if (currentClientsSameSecond <= 10)
+                            TimeDictionary[minute + "|" + second] = currentClientsSameSecond + 1;
+                        else
+                        {
+                            StreamReader reader = null;
+                            NetworkStream nwStream = client.GetStream();
+                            //creating the buffer message
+                            byte[] buffMessage = Encoding.ASCII.GetBytes("Access Granted!");
+
+                            //sending the message to the client
+                            nwStream.Write(buffMessage, 0, buffMessage.Length);
+
+                            //waiting for response
+                            reader = new StreamReader(nwStream);
+                            char[] buff = new char[64];
+                            int nRet = await reader.ReadAsync(buff, 0, buff.Length);
+                            string receivedText = new string(buff);
+                            controller.message(receivedText);
+                            Array.Clear(buff, 0, buff.Length);
+                        }
+
+                    }
+                    else
+                        client.Close();
                 }
 
             }
@@ -65,12 +95,17 @@ namespace victim
             }
         }
 
+        private bool CheckThePass(string result)
+        {
+            return result == victimPass;
+        }
+
         private async Task<string> AskClientForPassword(TcpClient client)
         {
             StreamReader reader = null;
             NetworkStream nwStream = client.GetStream();
             //creating the buffer message
-            byte[] buffMessage = Encoding.ASCII.GetBytes("Please enter your password\r\n");
+            byte[] buffMessage = Encoding.ASCII.GetBytes("Please enter your password");
 
            //sending the message to the client
             nwStream.Write(buffMessage, 0, buffMessage.Length);

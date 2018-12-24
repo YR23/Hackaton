@@ -84,5 +84,20 @@
   <ItemGroup>
     <None Include="Resources\victim.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\botback.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\victimback.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\victimback1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\victimback11.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\victimback12.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

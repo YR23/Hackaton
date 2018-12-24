@@ -52,21 +52,10 @@ namespace victim
                 KeepRunning = true;
                 while (KeepRunning)
                 {
-                    var returnedByAccept = await mTCPListener.AcceptTcpClientAsync();
-                    controller.NewClient(returnedByAccept.Client.RemoteEndPoint);
-                    //CheckTheTCPClient(returnedByAccept);
-                    /* The 10 Check;
-                    var currMin = DateTime.Now.Minute;
-                    if (TimeDictionary.ContainsKey(currMin))
-                        TimeDictionary[currMin] = TimeDictionary[currMin] + 1;
-                    else
-                        TimeDictionary.Add(currMin, 1);
-                    if (TimeDictionary[currMin] >= 10)
-                        StopServer();
-
-                    mClients.Add(returnedByAccept);
-                   */
-
+                    TcpClient client = await mTCPListener.AcceptTcpClientAsync();
+                    controller.NewClient(client.Client.RemoteEndPoint);
+                    string result = await AskClientForPassword(client);
+                    controller.message(result);
                 }
 
             }
@@ -74,6 +63,25 @@ namespace victim
             {
                 
             }
+        }
+
+        private async Task<string> AskClientForPassword(TcpClient client)
+        {
+            StreamReader reader = null;
+            NetworkStream nwStream = client.GetStream();
+            //creating the buffer message
+            byte[] buffMessage = Encoding.ASCII.GetBytes("Please enter your password\r\n");
+
+           //sending the message to the client
+            nwStream.Write(buffMessage, 0, buffMessage.Length);
+
+            //waiting for response
+            reader = new StreamReader(nwStream);
+            char[] buff = new char[64];
+            int nRet = await reader.ReadAsync(buff, 0, buff.Length);
+            string receivedText = new string(buff);
+            Array.Clear(buff, 0, buff.Length);
+            return receivedText;
         }
 
         internal void setController(controller mController)
@@ -118,12 +126,7 @@ namespace victim
 
                 while (KeepRunning)
                 {
-                    Debug.WriteLine("*** Ready to read");
-
                     int nRet = await reader.ReadAsync(buff, 0, buff.Length);
-
-                    System.Diagnostics.Debug.WriteLine("Returned: " + nRet);
-
                     if (nRet == 0)
                     {
                         RemoveClient(paramClient);

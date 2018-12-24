@@ -20,5 +20,10 @@ namespace victim
         {
             form1.UpdateNewClient(remoteEndPoint);
         }
+
+        internal void message(string remoteEndPoint)
+        {
+            form1.UpdateMessageBox(remoteEndPoint);
+        }
     }
 }

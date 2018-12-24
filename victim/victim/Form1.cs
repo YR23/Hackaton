@@ -29,10 +29,17 @@ namespace victim
             messegebox.Text += "New Client! from IP: "+ ip + " Port: "+ port +"\r\n";
         }
 
+        internal void UpdateMessageBox(string remoteEndPoint)
+        {
+            messegebox.Text += remoteEndPoint+"\r\n";
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             tcpServer.StartListeningForIncomingConnection(null,Int32.Parse(PortText.Text.Trim()), passtext.Text.Trim());
-            messegebox.Text += string.Format("Server listening on port {0}, password is {1}", PortText.Text.Trim(), passtext.Text.Trim());
+            messegebox.Text += string.Format("Server listening on port {0}, password is {1} \r\n", PortText.Text.Trim(), passtext.Text.Trim());
+            passtext.Text = "";
+            PortText.Text = "";
         }
 
         internal void setController(controller mController)

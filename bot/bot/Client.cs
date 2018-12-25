@@ -87,26 +87,20 @@ namespace bot
             try
             {
                 await mClient.ConnectAsync(mServerIPAddress, mServerPort);
-                controller.UpdateMessageBox("Attacking Victim!");
                 StreamReader clientStreamReader = new StreamReader(mClient.GetStream());
 
                 char[] buff = new char[64];
-                int readByteCount = 0;
 
-                while (true)
-                {
+                    int readByteCount = 0;
                     readByteCount = await clientStreamReader.ReadAsync(buff, 0, buff.Length);
-
                     if (readByteCount <= 0)
                     {
                         controller.UpdateMessageBox("Disconnected from server");
-                        break;
                     }
-
                     string msg = new string(buff);
                     controller.UpdateMessageBox(msg);
                     Array.Clear(buff, 0, buff.Length);
-                }
+                
             }
             catch (Exception e)
             {
@@ -138,18 +132,36 @@ namespace bot
                     char[] buff = new char[64];
                     int nRet = await reader.ReadAsync(buff, 0, buff.Length);
                     string receivedText = new string(buff);
+                    string finalText = clearAllzeroes(receivedText);
                     Array.Clear(buff, 0, buff.Length);
-                    if (receivedText == "Access Granted!")
+                    if (finalText == "Access Granted")
                     {
                         byte[] buf = Encoding.ASCII.GetBytes("Hacked By "+ShobName + "!");
 
                         //sending the message to the client
                         nwStream.Write(buf, 0, buf.Length);
                     }
+                    int readByteCount = 0;
+                    nRet = await reader.ReadAsync(buff, 0, buff.Length);
+                    if (nRet <= 0)
+                    {
+                        controller.UpdateMessageBox("\r\n"+"Disconnected from server");
+                    }
                 }
             }
         }
-           
+
+        private string clearAllzeroes(string receivedText)
+        {
+            string s = "";
+            for (int i = 0; i < receivedText.Length; i++)
+            {
+                if ((receivedText[i] >= 'a' && receivedText[i] <= 'z') || (receivedText[i] >= 'A' && receivedText[i] <= 'Z') ||(receivedText[i] == ' '))
+                    s += receivedText[i];
+            }
+            return s;
+        }
+
     }
  }
 

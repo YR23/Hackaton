@@ -60,19 +60,20 @@ namespace victim
                     {
                         var second = DateTime.Now.Second;
                         var minute = DateTime.Now.Minute;
-                        
+
+                        if (!TimeDictionary.ContainsKey(minute + "|" + second))
+                            TimeDictionary[minute + "|" + second] = 0;
                         int currentClientsSameSecond = TimeDictionary[minute+"|"+second];
-                        if (currentClientsSameSecond <= 10)
-                            TimeDictionary[minute + "|" + second] = currentClientsSameSecond + 1;
-                        else
+                        if (currentClientsSameSecond < 10)
                         {
+                            TimeDictionary[minute + "|" + second] = currentClientsSameSecond + 1;
                             StreamReader reader = null;
                             NetworkStream nwStream = client.GetStream();
                             //creating the buffer message
-                            byte[] buffMessage = Encoding.ASCII.GetBytes("Access Granted!");
+                            byte[] buffMessage = Encoding.ASCII.GetBytes("Access Granted");
 
                             //sending the message to the client
-                            nwStream.Write(buffMessage, 0, buffMessage.Length);
+                             nwStream.Write(buffMessage, 0, buffMessage.Length);
 
                             //waiting for response
                             reader = new StreamReader(nwStream);
@@ -82,7 +83,7 @@ namespace victim
                             controller.message(receivedText);
                             Array.Clear(buff, 0, buff.Length);
                         }
-
+                        client.Close();
                     }
                     else
                         client.Close();
@@ -115,8 +116,20 @@ namespace victim
             char[] buff = new char[64];
             int nRet = await reader.ReadAsync(buff, 0, buff.Length);
             string receivedText = new string(buff);
+            string finalText = clearAllzeroes(receivedText);
             Array.Clear(buff, 0, buff.Length);
-            return receivedText;
+            return finalText;
+        }
+
+        private string clearAllzeroes(string receivedText)
+        {
+            string s = "";
+            for (int i=0;i<receivedText.Length;i++)
+            {
+                if (receivedText[i] >= 'a' && receivedText[i] <= 'z')
+                    s += receivedText[i];
+            }
+            return s;
         }
 
         internal void setController(controller mController)

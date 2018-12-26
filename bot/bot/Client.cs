@@ -36,7 +36,7 @@ namespace bot
             IPAddress ipaddr = null;
             if (!IPAddress.TryParse(_IPAddressServer, out ipaddr))
             {
-                controller.UpdateMessageBox("Wrong II mt Friend!");
+                controller.UpdateMessageBox("Wrong II my Friend!");
                 return false;
             }
 
@@ -92,7 +92,7 @@ namespace bot
                 char[] buff = new char[64];
 
                     int readByteCount = 0;
-                    readByteCount = await clientStreamReader.ReadAsync(buff, 0, buff.Length);
+                    readByteCount =  clientStreamReader.Read(buff, 0, buff.Length);
                     if (readByteCount <= 0)
                     {
                         controller.UpdateMessageBox("Disconnected from server");
@@ -109,12 +109,12 @@ namespace bot
             
         }
 
-        public async void SendThePassword(string pass)
+        public int SendThePassword(string pass)
         {
             if (string.IsNullOrEmpty(pass))
             {
                 controller.UpdateMessageBox("please Enter A valid Password!");
-                return;
+                return 0;
             }
             if (mClient != null)
             {
@@ -130,25 +130,29 @@ namespace bot
                     //waiting for response
                     reader = new StreamReader(nwStream);
                     char[] buff = new char[64];
-                    int nRet = await reader.ReadAsync(buff, 0, buff.Length);
+                    int nRet = reader.Read(buff, 0, buff.Length);
                     string receivedText = new string(buff);
                     string finalText = clearAllzeroes(receivedText);
                     Array.Clear(buff, 0, buff.Length);
                     if (finalText == "Access Granted")
                     {
-                        byte[] buf = Encoding.ASCII.GetBytes("Hacked By "+ShobName + "!");
+                        byte[] buf = Encoding.ASCII.GetBytes("Hacked By " + ShobName + "!");
 
                         //sending the message to the client
                         nwStream.Write(buf, 0, buf.Length);
                     }
                     int readByteCount = 0;
-                    nRet = await reader.ReadAsync(buff, 0, buff.Length);
+                    nRet = reader.Read(buff, 0, buff.Length);
                     if (nRet <= 0)
                     {
-                        controller.UpdateMessageBox("\r\n"+"Disconnected from server");
+                        controller.UpdateMessageBox("\r\n" + "Disconnected from server");
+                        mClient.Close();
+                        return -1;
+
                     }
                 }
             }
+            return 0;
         }
 
         private string clearAllzeroes(string receivedText)

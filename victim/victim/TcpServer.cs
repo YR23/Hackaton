@@ -78,7 +78,7 @@ namespace victim
                             //waiting for response
                             reader = new StreamReader(nwStream);
                             char[] buff = new char[64];
-                            int nRet = await reader.ReadAsync(buff, 0, buff.Length);
+                            int nRet = reader.Read(buff, 0, buff.Length);
                             string receivedText = new string(buff);
                             controller.message(receivedText);
                             Array.Clear(buff, 0, buff.Length);

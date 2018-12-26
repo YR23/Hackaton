@@ -25,9 +25,20 @@ namespace bot
             MessageBoxText.Text += msg + "\r\n";
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
-            tcpClient.SendThePassword(PasswordTextBox.Text);
+             int x = tcpClient.SendThePassword(PasswordTextBox.Text);
+            if (x == -1)
+            {
+                DialogResult dialog = new DialogResult();
+
+                dialog = MessageBox.Show("You were disconnected by the victim, do you wish to Exit?", "Alert!", MessageBoxButtons.YesNo);
+
+                if (dialog == DialogResult.Yes)
+                {
+                    System.Environment.Exit(1);
+                }
+            }
         }
 
         internal void setController(controller mController)

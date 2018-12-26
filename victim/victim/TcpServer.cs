@@ -79,11 +79,12 @@ namespace victim
                             reader = new StreamReader(nwStream);
                             char[] buff = new char[64];
                             int nRet = reader.Read(buff, 0, buff.Length);
-                            string receivedText = new string(buff);
+                            string receivedText = new string(buff).Replace("\0", "");
                             controller.message(receivedText);
                             Array.Clear(buff, 0, buff.Length);
                         }
                         client.Close();
+                        correct = false;
                     }
                     else
                         client.Close();

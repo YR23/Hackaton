@@ -16,7 +16,8 @@ namespace bot
         TcpClient mClient;
         int mServerPort;
         IPAddress mServerIPAddress;
-        string ShobName = "Krang";
+        string ShobName;
+
 
         internal void setController(controller mController)
         {
@@ -29,6 +30,11 @@ namespace bot
             {
                 return mServerIPAddress;
             }
+        }
+
+        public void SetShobName(string name)
+        {
+            ShobName = name;
         }
 
         public bool SetServerIPAddress(string _IPAddressServer)
@@ -79,7 +85,7 @@ namespace bot
             {
                 mClient = new TcpClient();
             }
-            await ConnectToServer();   
+             ConnectToServer();   
         }
 
         public async Task ConnectToServer()
@@ -124,17 +130,20 @@ namespace bot
                     NetworkStream nwStream = mClient.GetStream();
                     //creating the buffer message
                     byte[] buffMessage = Encoding.ASCII.GetBytes(pass);
-
-                    //sending the message to the client
-                    nwStream.Write(buffMessage, 0, buffMessage.Length);
-                    //waiting for response
-                    reader = new StreamReader(nwStream);
                     char[] buff = new char[64];
+                    reader = new StreamReader(nwStream);
                     int nRet = reader.Read(buff, 0, buff.Length);
                     string receivedText = new string(buff);
                     string finalText = clearAllzeroes(receivedText);
+                    controller.UpdateMessageBox("please Enter A Password!");
+                    nwStream.Write(buffMessage, 0, buffMessage.Length);
+                    //waiting for response
+                    char[] buff2 = new char[64];
+                    nRet = reader.Read(buff2, 0, buff2.Length);
+                    receivedText = new string(buff2);
+                    finalText = clearAllzeroes(receivedText);
                     Array.Clear(buff, 0, buff.Length);
-                    if (finalText == "Access Granted")
+                    if (finalText.Contains("Access Granted"))
                     {
                         byte[] buf = Encoding.ASCII.GetBytes("Hacked By " + ShobName + "!");
 

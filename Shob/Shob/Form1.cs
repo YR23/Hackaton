@@ -26,7 +26,12 @@ namespace Shob
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Udpshob.AttackVictim(IPAddress.Parse(IpTextBox.Text), Int32.Parse(PortTextBox.Text), PassTextBox.Text);
+            byte[] ip = new byte[4];
+            ip = IPAddress.Parse(IpTextBox.Text).GetAddressBytes();
+            byte[] port = new byte[2];
+            int portnum = Int32.Parse(PortTextBox.Text);
+            port = BitConverter.GetBytes(portnum);
+            Udpshob.AttackVictim(ip, port,Encoding.UTF8.GetBytes(PassTextBox.Text));
         }
         
         internal void SetController(Controller mcontroller)

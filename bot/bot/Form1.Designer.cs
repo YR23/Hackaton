@@ -213,7 +213,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.groupBox3);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Bot";
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

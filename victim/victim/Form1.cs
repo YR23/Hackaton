@@ -26,7 +26,7 @@ namespace victim
         {
             string ip = remoteEndPoint.ToString().Split(':')[0];
             string port = remoteEndPoint.ToString().Split(':')[1];
-            messegebox.Text += "New Client! from IP: "+ ip + " Port: "+ port +"\r\n";
+            //messegebox.Text += "New Client! from IP: "+ ip + " Port: "+ port +"\r\n";
         }
 
         internal void UpdateMessageBox(string remoteEndPoint)

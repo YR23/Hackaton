@@ -16,7 +16,7 @@ namespace bot
         TcpClient mClient;
         int mServerPort;
         IPAddress mServerIPAddress;
-        string ShobName = "Laliz";
+        string ShobName = "Krang";
 
         internal void setController(controller mController)
         {

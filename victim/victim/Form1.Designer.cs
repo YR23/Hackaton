@@ -60,9 +60,9 @@
             // 
             // button1
             // 
-            this.button1.BackColor = System.Drawing.Color.Maroon;
-            this.button1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button1.Location = new System.Drawing.Point(141, 103);
+            this.button1.BackColor = System.Drawing.Color.PaleTurquoise;
+            this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button1.Location = new System.Drawing.Point(238, 105);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 5;
@@ -82,7 +82,7 @@
             // 
             // PortText
             // 
-            this.PortText.Location = new System.Drawing.Point(87, 66);
+            this.PortText.Location = new System.Drawing.Point(206, 66);
             this.PortText.Name = "PortText";
             this.PortText.Size = new System.Drawing.Size(139, 20);
             this.PortText.TabIndex = 3;
@@ -91,7 +91,7 @@
             // 
             // passtext
             // 
-            this.passtext.Location = new System.Drawing.Point(87, 27);
+            this.passtext.Location = new System.Drawing.Point(206, 23);
             this.passtext.Name = "passtext";
             this.passtext.Size = new System.Drawing.Size(139, 20);
             this.passtext.TabIndex = 2;
@@ -111,10 +111,10 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = global::victim.Properties.Resources.victim;
-            this.pictureBox1.Location = new System.Drawing.Point(421, 39);
+            this.pictureBox1.Image = global::victim.Properties.Resources.turtle1;
+            this.pictureBox1.Location = new System.Drawing.Point(395, 30);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(239, 246);
+            this.pictureBox1.Size = new System.Drawing.Size(281, 282);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
@@ -143,7 +143,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Brown;
-            this.BackgroundImage = global::victim.Properties.Resources.victimback12;
+            this.BackgroundImage = global::victim.Properties.Resources.back_turtles;
             this.ClientSize = new System.Drawing.Size(688, 324);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.pictureBox1);
